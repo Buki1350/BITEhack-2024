@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PickupCollider : MonoBehaviour
@@ -9,16 +10,17 @@ public class PickupCollider : MonoBehaviour
     {
         pickableLayer = LayerMask.NameToLayer("Pickable");
     }
+    
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.layer == pickableLayer)
         {
-            Debug.Log(other.gameObject.name);
             if (Input.GetKeyDown(playerEquipment.pickupKey))
             {
-                GameObject newEquippedItem = other.gameObject;
-                playerEquipment.equipment.Add(other.gameObject);
-                Destroy(newEquippedItem);
+                GameObject newEquippedItem = Instantiate(other.gameObject);
+                newEquippedItem.name = other.gameObject.name;
+                playerEquipment.equipment.Add(newEquippedItem);
+                Destroy(other.gameObject);
             }
         }
     }
