@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PickupCollider : MonoBehaviour
@@ -10,17 +9,23 @@ public class PickupCollider : MonoBehaviour
     {
         pickableLayer = LayerMask.NameToLayer("Pickable");
     }
-    
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.layer == pickableLayer)
         {
             if (Input.GetKeyDown(playerEquipment.pickupKey))
             {
-                GameObject newEquippedItem = Instantiate(other.gameObject);
-                newEquippedItem.name = other.gameObject.name;
-                playerEquipment.equipment.Add(newEquippedItem);
-                Destroy(other.gameObject);
+                bool picked = false;
+                for (int i = 0; i < playerEquipment.equipment.Count && !picked; i++)
+                {
+                    if (playerEquipment.equipment[i] == null)
+                    {
+                        GameObject newEquippedItem = Instantiate(other.gameObject);
+                        playerEquipment.equipment[i] = newEquippedItem;
+                        Destroy(other.gameObject);
+                        picked = true;
+                    }
+                }
             }
         }
     }
