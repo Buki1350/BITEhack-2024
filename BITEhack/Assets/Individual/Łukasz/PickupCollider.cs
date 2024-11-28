@@ -13,12 +13,19 @@ public class PickupCollider : MonoBehaviour
     {
         if (other.gameObject.layer == pickableLayer)
         {
-            Debug.Log(other.gameObject.name);
             if (Input.GetKeyDown(playerEquipment.pickupKey))
             {
-                GameObject newEquippedItem = other.gameObject;
-                playerEquipment.equipment.Add(other.gameObject);
-                Destroy(newEquippedItem);
+                bool picked = false;
+                for (int i = 0; i < playerEquipment.equipment.Count && !picked; i++)
+                {
+                    if (playerEquipment.equipment[i] == null)
+                    {
+                        GameObject newEquippedItem = Instantiate(other.gameObject);
+                        playerEquipment.equipment[i] = newEquippedItem;
+                        Destroy(other.gameObject);
+                        picked = true;
+                    }
+                }
             }
         }
     }
