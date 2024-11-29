@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerEquipment : MonoBehaviour
 {
@@ -8,15 +9,14 @@ public class PlayerEquipment : MonoBehaviour
     [SerializeField] public KeyCode pickupKey = KeyCode.E;
     [SerializeField] public GameObject uiItemHolder;
     public List<GameObject> equipment = new List<GameObject>();
-    private List<bool> itemUiCreated = new List<bool>();
-    
+    private List<Texture2D> uIEquipmentImages = new List<Texture2D>();
     int sizeOfEquipment = 5;
     void Start()
     {
         for (int i = 0; i < sizeOfEquipment; i++)
         {
             equipment.Add(null);
-            itemUiCreated.Add(false);
+            uIEquipmentImages.Add(null);
         }
     }
     void Update()
@@ -25,11 +25,8 @@ public class PlayerEquipment : MonoBehaviour
         {
             if (!itemUiCreated[i] && equipment[i] != null)
             {
-                equipment[i] = Instantiate(equipment[i], uiItemHolder.transform);
-                equipment[i].transform.localScale = Vector3.one * 10;
-                equipment[i].transform.localPosition = new Vector3(equipment[i].transform.localPosition.x, equipment[i].transform.localPosition.y, equipment[i].transform.localPosition.z + equipment[i].GetComponent<Collider>().bounds.size.z);
+                uIEquipmentImages[i] = Instantiate(equipment[i].GetComponent<Item>().InventoryImage, uiItemHolder.transform);  
                 itemUiCreated[i] = true;
-                
             }
         }
     }
