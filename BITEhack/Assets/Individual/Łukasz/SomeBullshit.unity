@@ -122,6 +122,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!20 &8630590 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 4399730746193936443, guid: a95a359e42379034392576c98bf19dab,
+    type: 3}
+  m_PrefabInstance: {fileID: 1236401193191359710}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &203565075
 GameObject:
   m_ObjectHideFlags: 0

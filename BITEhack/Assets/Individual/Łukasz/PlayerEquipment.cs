@@ -10,8 +10,6 @@ public class PlayerEquipment : MonoBehaviour
     [SerializeField] public GameObject uiItemHolder;
     public List<GameObject> equipment = new List<GameObject>();
     private List<Texture2D> uIEquipmentImages = new List<Texture2D>();
-    private List<bool> itemUiCreated = new List<bool>();
-    
     int sizeOfEquipment = 5;
     void Start()
     {
@@ -19,7 +17,6 @@ public class PlayerEquipment : MonoBehaviour
         {
             equipment.Add(null);
             uIEquipmentImages.Add(null);
-            itemUiCreated.Add(false);
         }
     }
     void Update()
