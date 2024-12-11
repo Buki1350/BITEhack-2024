@@ -57,14 +57,17 @@ public class Room : MonoBehaviour
 
     void Update()
     {
-        isPlayerAbove = false;
-        RaycastHit hit;
-        if (Physics.Raycast(player.transform.position, Vector3.down, out hit, Mathf.Infinity,
-                LayerMask.GetMask("Room")))
+        if (player != null)
         {
-            if (hit.collider.transform.IsChildOf(transform) || hit.collider.gameObject == gameObject)
+            isPlayerAbove = false;
+            RaycastHit hit;
+            if (Physics.Raycast(player.transform.position, Vector3.down, out hit, Mathf.Infinity,
+                    LayerMask.GetMask("Room")))
             {
-                isPlayerAbove = true;
+                if (hit.collider.transform.IsChildOf(transform) || hit.collider.gameObject == gameObject)
+                {
+                    isPlayerAbove = true;
+                }
             }
         }
     }
