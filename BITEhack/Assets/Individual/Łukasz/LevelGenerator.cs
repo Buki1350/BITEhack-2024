@@ -120,7 +120,7 @@ public class LevelGenerator : MonoBehaviour
                 deltaY = currentRoomY + 1 - center;
                 initAngle = 0;
                 if (deltaX != 0)
-                    initAngle = Mathf.Atan2(deltaY, deltaX);
+                    initAngle = Mathf.Atan2(Mathf.Abs(deltaY), Mathf.Abs(deltaX));
 
                 isRoomMoving = true;
             }
@@ -139,33 +139,50 @@ public class LevelGenerator : MonoBehaviour
     
                 if (distance > 0)
                 {
-                    // Normalize the direction
-                    float normalizedX = deltaX / distance;
-                    float normalizedY = deltaY / distance;
-        
-                    // Determine primary movement direction based on which component is larger
-                    if (Mathf.Abs(normalizedX) > Mathf.Abs(normalizedY))
+                    // // Normalize the direction
+                    // float normalizedX = deltaX / distance;
+                    // float normalizedY = deltaY / distance;
+                    //
+                    // // Determine primary movement direction based on which component is larger
+                    // if (Mathf.Abs(normalizedX) > Mathf.Abs(normalizedY))
+                    // {
+                    //     additionalX = (normalizedX > 0) ? -1 : 1;
+                    // }
+                    // else
+                    // {
+                    //     additionalY = (normalizedY > 0) ? -1 : 1;
+                    // }
+                    //
+                    // // Add randomization to prevent strict diagonal movement
+                    // if (Random.value < 0.3f)
+                    // {
+                    //     if (additionalX == 0)
+                    //     {
+                    //         additionalX = (Random.value < 0.5f) ? -1 : 1;
+                    //         additionalY = 0;
+                    //     }
+                    //     else if (additionalY == 0)
+                    //     {
+                    //         additionalY = (Random.value < 0.5f) ? -1 : 1;
+                    //         additionalX = 0;
+                    //     }
+                    // }
+                    
+                    float alpha = Mathf.Atan2(Mathf.Abs(deltaY), Mathf.Abs(deltaX)) * Mathf.Rad2Deg;
+                    
+                    if (alpha > initAngle)
                     {
-                        additionalX = (normalizedX > 0) ? -1 : 1;
+                        if (deltaY > 0)
+                            additionalY = -1;
+                        else
+                            additionalY = 1;
                     }
                     else
                     {
-                        additionalY = (normalizedY > 0) ? -1 : 1;
-                    }
-        
-                    // Add randomization to prevent strict diagonal movement
-                    if (Random.value < 0.3f)
-                    {
-                        if (additionalX == 0)
-                        {
-                            additionalX = (Random.value < 0.5f) ? -1 : 1;
-                            additionalY = 0;
-                        }
-                        else if (additionalY == 0)
-                        {
-                            additionalY = (Random.value < 0.5f) ? -1 : 1;
-                            additionalX = 0;
-                        }
+                        if (deltaX > 0)
+                            additionalX = -1;
+                        else
+                            additionalX = 1;
                     }
                 }
 
@@ -290,26 +307,26 @@ public class LevelGenerator : MonoBehaviour
                     Debug.Log("Creating rooms: " + currentRoomsCount + " / " + roomNumber);
                 }
 
-                // for (int j = 0; j < levelSize; j++)
-                // {
-                //     string line = "";
-                //     for (int i = 0; i < levelSize; i++)
-                //     {
-                //         if (i >= currentRoomX && i < currentRoomX + roomSize && j >= currentRoomY &&
-                //             j < currentRoomY + roomSize)
-                //             if (levelMatrix[j, i] != 0)
-                //                 line += levelMatrix[j, i];
-                //             else
-                //                 line += roomMatrix[j - currentRoomY, i - currentRoomX];
-                //             
-                //         else if (levelMatrix[j, i] == 0)
-                //             line += " ";
-                //         else
-                //             line += levelMatrix[j, i].ToString();
-                //     }
-                //     Debug.Log(line+"\n");
-                // }
-                // Debug.Log("\n\n\n");
+                for (int j = 0; j < levelSize; j++)
+                {
+                    string line = "";
+                    for (int i = 0; i < levelSize; i++)
+                    {
+                        if (i >= currentRoomX && i < currentRoomX + roomSize && j >= currentRoomY &&
+                            j < currentRoomY + roomSize)
+                            if (levelMatrix[j, i] != 0)
+                                line += levelMatrix[j, i];
+                            else
+                                line += roomMatrix[j - currentRoomY, i - currentRoomX];
+                            
+                        else if (levelMatrix[j, i] == 0)
+                            line += " ";
+                        else
+                            line += levelMatrix[j, i].ToString();
+                    }
+                    Debug.Log(line+"\n");
+                }
+                Debug.Log("\n\n\n");
                 
             }
 
