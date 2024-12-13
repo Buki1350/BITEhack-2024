@@ -10,15 +10,18 @@ public class LevelGenerator : MonoBehaviour
 {
     [SerializeField] Vector3 StartRoomPosition = Vector3.zero;
     [SerializeField] private int roomNumber = 10;
-    
-    [SerializeField] List<GameObject> rooms = new List<GameObject>();
-    [SerializeField] List<GameObject> startRooms = new List<GameObject>();
+
+    [SerializeField] private List<GameObject> rooms;
+    [SerializeField] private List<GameObject> startRooms;
+    [SerializeField] private List<GameObject> uniqueRooms;
+    [SerializeField] private List<GameObject> optionalRooms;
+    [SerializeField] private List<GameObject> uniqueOptionalRooms;
     [SerializeField] private GameObject bridge;
     [SerializeField] private GameObject testSphere;
     
-    private List<GameObject> SquareRooms = new List<GameObject>();
-    private List<GameObject> LRooms = new List<GameObject>();
-    private List<GameObject> IRooms = new List<GameObject>();
+    private List<GameObject> SquareRooms;
+    private List<GameObject> LRooms;
+    private List<GameObject> IRooms;
 
     private int currentRoomsCount = 0;
     
@@ -58,6 +61,13 @@ public class LevelGenerator : MonoBehaviour
         levelMatrix[center, center] = 2;
         
         borderLeft = borderRight = borderUp = borderDown = 1 + 1 + roomSize;
+        
+        
+        //create id for every avaliable room
+        
+        
+        
+        //
         
         for (int i = 0; i < rooms.Count; i++)
         {
@@ -168,22 +178,19 @@ public class LevelGenerator : MonoBehaviour
                     //     }
                     // }
                     
-                    float alpha = Mathf.Atan2(Mathf.Abs(deltaY), Mathf.Abs(deltaX)) * Mathf.Rad2Deg;
-                    
+                    float alpha = Mathf.Atan2(Mathf.Abs(deltaY), Mathf.Abs(deltaX));
+
                     if (alpha > initAngle)
-                    {
-                        if (deltaY > 0)
-                            additionalY = -1;
-                        else
-                            additionalY = 1;
-                    }
+                        additionalY = 1;
                     else
-                    {
-                        if (deltaX > 0)
-                            additionalX = -1;
-                        else
-                            additionalX = 1;
-                    }
+                        additionalX = 1;
+
+                    if (deltaX > 0)
+                        additionalX *= -1;
+                    if (deltaY > 0)
+                        additionalY *= -1;
+                    
+                    Debug.Log(initAngle + "   " + alpha);
                 }
 
                 
@@ -307,26 +314,27 @@ public class LevelGenerator : MonoBehaviour
                     Debug.Log("Creating rooms: " + currentRoomsCount + " / " + roomNumber);
                 }
 
-                for (int j = 0; j < levelSize; j++)
-                {
-                    string line = "";
-                    for (int i = 0; i < levelSize; i++)
-                    {
-                        if (i >= currentRoomX && i < currentRoomX + roomSize && j >= currentRoomY &&
-                            j < currentRoomY + roomSize)
-                            if (levelMatrix[j, i] != 0)
-                                line += levelMatrix[j, i];
-                            else
-                                line += roomMatrix[j - currentRoomY, i - currentRoomX];
-                            
-                        else if (levelMatrix[j, i] == 0)
-                            line += " ";
-                        else
-                            line += levelMatrix[j, i].ToString();
-                    }
-                    Debug.Log(line+"\n");
-                }
-                Debug.Log("\n\n\n");
+                // for (int j = 0; j < levelSize; j++)
+                // {
+                //     string line = "";
+                //     for (int i = 0; i < levelSize; i++)
+                //     {
+                //         if (i >= currentRoomX && i < currentRoomX + roomSize && j >= currentRoomY &&
+                //             j < currentRoomY + roomSize)
+                //             if (levelMatrix[j, i] != 0)
+                //                 line += levelMatrix[j, i];
+                //             else
+                //                 line += roomMatrix[j - currentRoomY, i - currentRoomX];
+                //             
+                //         else if (levelMatrix[j, i] == 0)
+                //             line += " ";
+                //         else
+                //             line += levelMatrix[j, i].ToString();
+                //     }
+                //     Debug.Log(line+"\n");
+                // }
+                // Debug.Log("\n\n\n");
+                
                 
             }
 
