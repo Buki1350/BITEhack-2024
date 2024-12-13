@@ -16,6 +16,8 @@ public enum RoomTypes
 
 public class Room : MonoBehaviour
 {
+    [HideInInspector] public int roomID = -1;
+    
     //1 for empty space
     //2 for starting room
     //3 for square
@@ -24,20 +26,20 @@ public class Room : MonoBehaviour
     private int[,] squareRoomMatrix =
     {
         {0, 0, 0 },
-        {0, -3, 0 },
+        {0, -2, 0 },
         {0, 0, 0 },
     };
     private int[,] LRoomMatrix =
     {
         {0, -1, 0 },
-        { 0, -4, -1 },
+        { 0, -2, -1 },
         { 0, 0, 0 }
     };
 
     private int[,] IRoomMatrix =
     {
         {0, 0, 0},
-        { 0, -5, -1 },
+        { 0, -2, -1 },
         { 0, 0, 0 }
     };
     
@@ -45,6 +47,7 @@ public class Room : MonoBehaviour
     [SerializeField] private RoomTypes roomType;
 
     private GameObject player;
+    [HideInInspector] public int[,] roomMatrix;
 
     private bool isPlayerAbove = false;
     private bool isRoomCleared = true;
